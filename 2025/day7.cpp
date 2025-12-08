@@ -52,7 +52,6 @@ int main() {
 	while (!mal.empty()) {
 		auto sl = mal.front();
 		mal.pop();
-		
 		if (dal.find(sl) != dal.end()) continue; 
 		
 		dal.insert(sl);
