@@ -23,11 +23,36 @@ long long back(vector<int>& state,
 	for (int i = 0; i <= mini; i++) {
 		// if (i > 0 && i <= mini / 2) continue;
 		
+			
+	for (int i = 0; i <= mini; i++) {
 		for (int k : combs[idx]) {
 			state[k] += i;
 		}
 		
-		ans = min(ans, back(state, target, combs, idx + 1, dp) + i);
+		bool ok = true;
+		
+		for (int j = 0; j < target.size() && ok; j++) {
+			if (state[j] == target[j]) continue;
+			
+			bool found = false;
+			
+			for (auto& sal : combs) {
+				bool found1 = true, found2 = false;
+				for (int& jj : sal) {
+					if (state[jj] == target[jj]) found1 = false;
+					if (jj == j) found2 = true;
+				}
+				
+				if (found1 && found2) {
+					found = true;
+					break;
+				}
+			}
+			
+			ok &= found;
+		}
+		
+		if (ok) ans = min(ans, back(state, target, combs, idx + 1, dp) + i);
 		
 		for (int k : combs[idx]) {
 			state[k] -= i;
